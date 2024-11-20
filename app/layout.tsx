@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from 'next/font/google'
 import "./globals.css";
+import Navbar from "@/components/navbar/Navbar";
+import Providers from "./providers";
 
 export const metadata: Metadata = {
   title: "HomeAway",
@@ -21,8 +23,13 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${inter} antialiased`}
-      >
-        {children}
+      suppressHydrationWarning>
+        <Providers>
+          <Navbar />
+          <main className="container py-10">
+            {children}
+          </main>
+        </Providers>
       </body>
     </html>
   );
