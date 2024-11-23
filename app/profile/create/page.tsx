@@ -5,7 +5,7 @@ import FormInput from "@/components/form/FormInput"
 
 const createProfileAction = async (prevState: StateType, formData: FormData) => {
     'use server'
-    const firstName = formData.get('firstName');
+    const firstName = formData.get('firstName') as string;
     console.log(firstName)
     return {
       message: 'profile created successfully'
@@ -21,7 +21,7 @@ const Page = () => {
         <div className='border p-8 rounded-md'>
         <FormContainer action={createProfileAction}>
           <div className='grid md:grid-cols-2 gap-4 mt-4 '>
-            <FormInput type='text' name="firstname" label='First Name'/>
+            <FormInput type='text' name="firstName" label='First Name'/>
             <FormInput type='text' name='lastName' label='Last Name' />
             <FormInput type='text' name='username' label='Username' />
           </div>

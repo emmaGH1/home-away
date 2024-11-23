@@ -20,7 +20,7 @@ function FormInput({
     <div className='mb-2'>
       <Label htmlFor={name} className='capitalize'>
         {label || name}
-      </Label> 
+      </Label>
       <Input
         id={name}
         name={name}

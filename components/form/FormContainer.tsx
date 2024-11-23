@@ -10,17 +10,14 @@ import { actionFunction, StateType } from '@/utils/types'
  }
 
  function FormContainer ({ action, children}: { action: actionFunction<StateType>, children: ReactNode}){
-    const [state, formAction] = useActionState(action, initialState)
-    const {toast} = useToast()
-
-    useEffect(() => {
-       if (state.message) {
-        toast({ description: state.message })
-       }
-    }, [state])
-    return <form action={formAction}>
-        {children}
-    </form>
+   const [state, formAction] = useActionState(action, initialState);
+   const { toast } = useToast();
+   useEffect(() => {
+     if (state.message) {
+       toast({ description: state.message });
+     }
+   }, [state]);
+   return <form action={formAction}>{children}</form>;
  }
 
  export default FormContainer
