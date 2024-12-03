@@ -1,11 +1,20 @@
 'use server'
 
 import db from './db';
-import { auth, clerkClient, currentUser } from '@clerk/nextjs/server';
-import { revalidatePath } from 'next/cache';
+import { clerkClient, currentUser } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 import { StateType } from './types';
 import { profileSchema } from './schemas';
+
+const getAuthUser = async ()=> {
+   const user = await currentUser();
+   if (!user) {
+     throw new Error('You must be logged in to access this route')
+   }
+
+   if (!user.privateMetadata.hasProfile) redirect('/profile/create')
+   return user;
+  }
 
 export const createProfileAction = async (
   prevState: StateType,
@@ -54,4 +63,19 @@ export const fetchProfileImage = async () => {
     })
 
     return profile?.profileImage
+}
+
+export const fetchProfile = async () => {
+   const user = await getAuthUser();
+   const profile = await db.profile.findUnique({
+    where: {
+      clerkId: user.id
+    },
+   })
+   if (!profile) redirect('/profile/create')
+   return profile
+}
+
+export const updateProfileAction = async(prevState: StateType, formData: FormData): Promise<{message: string}> => {
+  return { message: 'update profile action'}
 }
